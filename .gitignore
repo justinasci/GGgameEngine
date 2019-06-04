@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+*.dll
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +30,18 @@
 *.exe
 *.out
 *.app
+
+# Folders
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+.vs/
