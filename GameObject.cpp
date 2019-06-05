@@ -14,6 +14,7 @@ GameObject::GameObject(Scene* scene)
 }
 
 void GameObject::update(float delta) {
+	setIsDirty(false);
 	for (auto it = components.begin(); it != components.end(); ++it) {
 		Component* c = *it;
 		c->update(delta);
@@ -24,6 +25,7 @@ void GameObject::addComponent(Component* component) {
 	component->setOwner(this);
 	components.push_back(component);
 	component->init();
+	setIsDirty(true);
 }
 
 void GameObject::setScene(Scene* scene)

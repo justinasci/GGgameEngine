@@ -1,5 +1,8 @@
 #pragma once
 #include "GameObject.h"
+
+
+
 class Component
 {
 public:
@@ -7,6 +10,7 @@ public:
 	virtual void init() = 0;
 	virtual void destroy() = 0;
 	void setOwner(GameObject* owner);
+	GameObject* getOwner() { return owner; };
 
 	template <class T>
 	void addComponent(T* component) {

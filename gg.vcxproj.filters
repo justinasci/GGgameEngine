@@ -50,5 +50,8 @@
     <ClInclude Include="Comps.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

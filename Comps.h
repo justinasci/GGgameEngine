@@ -1,7 +1,8 @@
 #pragma once
 #include "Component.h"
+#include "Renderable.h"
 #include "SFML/Graphics.hpp"
-
+#include <iostream>
 
 
 class Transform: public Component
@@ -24,14 +25,19 @@ public:
 
 };
 
-class Sprite: public Component
+class Sprite: public RenderComponent
 {
 public:
 	// Inherited via Component
 	sf::Sprite sprite;
-	virtual void update(float delta) override {};
+	virtual void update(float delta) override {
+		//std::cout << "Sprite: " << family() << "\n";
+	};
 	virtual void init() override {};
 	virtual void destroy() override {};
+	virtual void draw(sf::RenderTarget & target, sf::RenderStates states, sf::Transform t) const {
+		target.draw(sprite, t);
+	}
 };
 
 class Spinner : public Component {
@@ -40,6 +46,7 @@ public:
 	Transform* t;
 	void update(float delta) {
 		t->transform.rotate(90 * delta);
+		//std::cout << "Spinner: " << family() << "\n";
 	}
 
 	void init() {
@@ -81,11 +88,14 @@ public:
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			Sprite* sp = getComponent<Sprite>();
-			GameObject* b = makeBullet(sp->sprite, t->transform);
-			addGameObject(b);
-			
+			for (int i = 0; i < 10; i++) {
+				Sprite* sp = getComponent<Sprite>();
+				GameObject* b = makeBullet(sp->sprite, t->transform);
+				addGameObject(b);
+			}
 		}
+
+		//std::cout << "Player: " << family() << "\n";
 
 		t->transform.translate(dpos* delta);
 	}
