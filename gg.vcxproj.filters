@@ -16,6 +16,9 @@
     <Filter Include="Header Files\BaseComponents">
       <UniqueIdentifier>{d70e9106-8bf1-455b-a64e-3407c3a16bbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\BaseSystems">
+      <UniqueIdentifier>{b403f3ef-8e4d-42fc-921b-634379cdfec5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -31,6 +34,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -55,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="Comps.h">
       <Filter>Header Files\BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>Header Files\BaseSystems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

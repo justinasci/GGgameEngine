@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "Renderable.h"
+#include "System.h"
 #include <iostream>
 
 void Scene::update(float delta) {
@@ -15,7 +16,7 @@ void Scene::update(float delta) {
 	}
 
 #ifdef _DEBUG
-	std::cout << "Total gameObjects in scene: " << toBeAdded.size() << "\n";
+	if (toBeAdded.size() > 0) std::cout << "Total gameObjects in scene: " << toBeAdded.size() << "\n";
 #endif
 
 	while (!toBeAdded.empty()) {
@@ -27,7 +28,9 @@ void Scene::update(float delta) {
 	if (dirtyObjects.size() > 0) {
 		//Update Systems
 		for (auto dgo : dirtyObjects) {
-			addRenderable(dgo);
+			for (auto system : systems) {
+				system->addGameObject(dgo);
+			}
 		}
 	}
 
@@ -44,14 +47,12 @@ void Scene::removeGameObject(GameObject* go) {
 	toBeRemoved.push(go);
 }
 
-void Scene::updateRenderable() {
-	renderComponents.clear();
-	for (auto go : gameObjects) {
-		addRenderable(go);
-	}
+void Scene::addSystem(System* system)
+{
+	systems.push_back(system);
 }
 
-void Scene::addRenderable(GameObject* go) {
-	auto rc = go->getComponent<RenderComponent>();
-	renderComponents.push_back(rc);
+void Scene::removeSystem(System* system)
+{
+	
 }

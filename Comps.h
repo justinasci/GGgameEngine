@@ -58,10 +58,8 @@ class RemovAfterTime : public Component {
 class PlayerController : public Component
 {
 public:
-	Transform* t;
+	Transform* t = nullptr;
 	float speed = 100.0f;
-
-
 
 	void update(float delta)
 	{
