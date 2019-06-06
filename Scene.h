@@ -16,37 +16,41 @@ public:
 	}
 	void update(float delta) {
 		int lengthGameObjects = gameObjects.size();
-		bool isDirty = false;
+		dirtyObjects.clear();
 		for (int i = 0; i < lengthGameObjects; i++) {
 			gameObjects[i]->update(delta);
-			if (isDirty == false) {
-				isDirty = gameObjects[i]->getIsDirty();
+			bool dirty = gameObjects[i]->getIsDirty();
+			if (dirty) {
+				dirtyObjects.push_back(gameObjects[i]);
 			}
 		}
 
+#ifdef _DEBUG
+		std::cout << "Total gameObjects in scene: " << toBeAdded.size() << "\n";
+#endif
+
 		while (!toBeAdded.empty()) {
 			gameObjects.push_back(toBeAdded.top());
-			addRenderable(toBeAdded.top());
+			dirtyObjects.push_back(toBeAdded.top());
 			toBeAdded.pop();
 		}
 
-		if (isDirty) {
-			updateRenderable();
-		} else if (lengthGameObjects < gameObjects.size()) {
-			// addRenderable(gameObjects[gameObjects.size() - 1]);
+		if (dirtyObjects.size() > 0) {
+			for (auto dgo : dirtyObjects) {
+				//Update Systems
+				addRenderable(dgo);
+			}
 		}
 	}
 
 	void addGameObject(GameObject* go) {
 		go->setScene(this);
-		//gameObjects.push_back(go);
 		toBeAdded.push(go);
-		std::cout << "Total gameObjects in scene: " << gameObjects.size() << "\n" ;
 	}
 
 	void removeGameObject(GameObject* go) {
-		std::remove(gameObjects.begin(), gameObjects.end(), go);
-		delete go;
+		go->setIsDisabled(true);
+		toBeRemoved.push(go);
 	}
 
 	void updateRenderable() {
@@ -63,16 +67,20 @@ public:
 
 private:
 	std::vector<GameObject*> gameObjects;
+
 	std::stack<GameObject*> toBeAdded;
+	std::stack<GameObject*> toBeRemoved;
+	std::vector<GameObject*> dirtyObjects;
+
 	std::vector<RenderComponent* > renderComponents;
 	bool running = false;
 
 	// Inherited via Drawable
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
-		for (auto rc : renderComponents) {
-			rc->draw(target, states, rc->getComponent<Transform>()->transform);
-		}
+		/*for (auto rc : renderComponents) {
+			rc->draw(target, states, rc->getTransfrom()->transform);
+		}*/
 
 		//for (GameObject* o : gameObjects) {
 		//	Sprite* sp = o->getComponent<Sprite>();

@@ -46,11 +46,10 @@ public:
 	Transform* t = nullptr;
 	void update(float delta) {
 		t->transform.rotate(90 * delta);
-		//std::cout << "Spinner: " << family() << "\n";
 	}
 
 	void onInit() {
-		t = getComponent<Transform>();
+		t = getTransfrom();
 	}
 
 	void onDestroy() {};
@@ -101,7 +100,7 @@ public:
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 1; i++) {
 				Sprite* sp = getComponent<Sprite>();
 				GameObject* b = makeBullet(sp->sprite, t->transform);
 				addGameObject(b);
@@ -115,7 +114,7 @@ public:
 
 	void onInit()
 	{
-		t = getComponent<Transform>();
+		t = getTransfrom();
 	}
 
 	void onDestroy()
