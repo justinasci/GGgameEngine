@@ -2,13 +2,13 @@
 #include "GameObject.h"
 
 
-
+class Transform;
 class Component
 {
 public:
 	virtual void update(float delta) = 0;
-	virtual void init() = 0;
-	virtual void destroy() = 0;
+	virtual void onInit() = 0;
+	virtual void onDestroy() = 0;
 	void setOwner(GameObject* owner);
 	GameObject* getOwner() { return owner; };
 
@@ -22,6 +22,10 @@ public:
 		return ptr;
 	}
 
+	void destoryOwner() {
+		removeGameObject(owner);
+	}
+
 	void removeGameObject(GameObject* ob) {
 		owner->removeGameObject(ob);
 	}
@@ -29,6 +33,10 @@ public:
 	void addGameObject(GameObject* ob) {
 		owner->addGameObject(ob);
 	}
+
+	Transform* getTransfrom() {
+		return owner->getTransform();
+	};
 
 protected:
 	bool activated = true;

@@ -1,8 +1,10 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+
 #include <vector>
 class Component;
 class Scene;
+class Transform;
 class GameObject
 {
 public:
@@ -17,6 +19,10 @@ public:
 
 	bool getIsDirty() { return isDirty;  };
 	void setIsDirty(bool value);
+
+	void onDestory();
+
+	Transform* getTransform();
 
 	void addComponent(Component* component);
 	template<class T>

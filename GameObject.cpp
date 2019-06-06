@@ -24,7 +24,7 @@ void GameObject::update(float delta) {
 void GameObject::addComponent(Component* component) {
 	component->setOwner(this);
 	components.push_back(component);
-	component->init();
+	component->onInit();
 	setIsDirty(true);
 }
 
@@ -46,4 +46,18 @@ void GameObject::removeGameObject(GameObject* ob)
 void GameObject::setIsDirty(bool value)
 {
 	isDirty = value;
+}
+
+void GameObject::onDestory()
+{
+	for (int i = 0; i < components.size(); i++) {
+		components[i]->onDestroy();
+		delete components[i];
+	}
+	components.clear();
+}
+
+Transform* GameObject::getTransform()
+{
+	return static_cast<Transform*>(components[0]);
 }

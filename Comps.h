@@ -15,11 +15,11 @@ public:
 
 	};
 
-	virtual void init() override {
+	virtual void onInit() override {
 
 	};
 
-	virtual void destroy() override {
+	virtual void onDestroy() override {
 
 	};
 
@@ -33,8 +33,8 @@ public:
 	virtual void update(float delta) override {
 		//std::cout << "Sprite: " << family() << "\n";
 	};
-	virtual void init() override {};
-	virtual void destroy() override {};
+	virtual void onInit() override {};
+	virtual void onDestroy() override {};
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states, sf::Transform t) const {
 		target.draw(sprite, t);
 	}
@@ -43,19 +43,32 @@ public:
 class Spinner : public Component {
 public:
 
-	Transform* t;
+	Transform* t = nullptr;
 	void update(float delta) {
 		t->transform.rotate(90 * delta);
 		//std::cout << "Spinner: " << family() << "\n";
 	}
 
-	void init() {
+	void onInit() {
 		t = getComponent<Transform>();
 	}
 
-	void destroy() {};
+	void onDestroy() {};
 };
 
+class RemovAfterTime : public Component {
+	// Inherited via Component
+	float timer = 0.0f;
+	virtual void update(float delta) override {
+		timer += delta;
+
+		if (timer > 5.0f) {
+			this->destoryOwner();
+		}
+	};
+	virtual void onInit() override {};
+	virtual void onDestroy() override {};
+};
 
 class PlayerController : public Component
 {
@@ -100,12 +113,12 @@ public:
 		t->transform.translate(dpos* delta);
 	}
 
-	void init()
+	void onInit()
 	{
 		t = getComponent<Transform>();
 	}
 
-	void destroy()
+	void onDestroy()
 	{
 		
 	}
