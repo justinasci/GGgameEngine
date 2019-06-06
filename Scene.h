@@ -1,12 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#include <string>
-#include <iostream>
-#include <algorithm>
+#include "Component.h"
+#include "Transfrom.h"
+#include "Renderable.h"
 #include "SFML/Graphics.hpp"
-#include "Comps.h"
-#include <iostream>
 #include <stack>
+#include <vector>
 
 class Scene : public sf::Drawable
 {
@@ -14,56 +13,11 @@ public:
 	Scene() {
 
 	}
-	void update(float delta) {
-		size_t lengthGameObjects = gameObjects.size();
-		dirtyObjects.clear();
-		for (size_t i = 0; i < lengthGameObjects; i++) {
-			gameObjects[i]->update(delta);
-			bool dirty = gameObjects[i]->getIsDirty();
-			if (dirty) {
-				dirtyObjects.push_back(gameObjects[i]);
-			}
-		}
-
-#ifdef _DEBUG
-		std::cout << "Total gameObjects in scene: " << toBeAdded.size() << "\n";
-#endif
-
-		while (!toBeAdded.empty()) {
-			gameObjects.push_back(toBeAdded.top());
-			dirtyObjects.push_back(toBeAdded.top());
-			toBeAdded.pop();
-		}
-
-		if (dirtyObjects.size() > 0) {
-			for (auto dgo : dirtyObjects) {
-				//Update Systems
-				addRenderable(dgo);
-			}
-		}
-	}
-
-	void addGameObject(GameObject* go) {
-		go->setScene(this);
-		toBeAdded.push(go);
-	}
-
-	void removeGameObject(GameObject* go) {
-		go->setIsDisabled(true);
-		toBeRemoved.push(go);
-	}
-
-	void updateRenderable() {
-		renderComponents.clear();
-		for (auto go : gameObjects) {
-			addRenderable(go);
-		}
-	}
-
-	void addRenderable(GameObject* go) {
-		auto rc = go->getComponent<RenderComponent>();
-		renderComponents.push_back(rc);
-	}
+	void update(float delta);
+	void addGameObject(GameObject* go);
+	void removeGameObject(GameObject* go);
+	void updateRenderable();
+	void addRenderable(GameObject* go);
 
 private:
 	std::vector<GameObject*> gameObjects;
@@ -78,9 +32,9 @@ private:
 	// Inherited via Drawable
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
-		/*for (auto rc : renderComponents) {
-			rc->draw(target, states, rc->getTransfrom()->transform);
-		}*/
+		for (auto rc : renderComponents) {
+			rc->draw(target, states, *rc->getTransfrom());
+		}
 
 		//for (GameObject* o : gameObjects) {
 		//	Sprite* sp = o->getComponent<Sprite>();

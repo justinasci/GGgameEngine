@@ -13,8 +13,8 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{7ee70cc8-7692-4f9b-a718-563ae26e72c0}</UniqueIdentifier>
+    <Filter Include="Header Files\BaseComponents">
+      <UniqueIdentifier>{d70e9106-8bf1-455b-a64e-3407c3a16bbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,11 +47,14 @@
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Comps.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Renderable.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Header Files\BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Transfrom.h">
+      <Filter>Header Files\BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Comps.h">
+      <Filter>Header Files\BaseComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

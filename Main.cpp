@@ -40,7 +40,7 @@ SpriteSheet loadSpriteSheet(sf::Texture* texture, int widthTiles, int heightTile
 void buildScene(Scene& scene, SpriteSheet sp) {
 	GameObject* gob = new GameObject();
 	Sprite* sprite = new Sprite();
-	sprite->sprite = sp.frames[0];
+	*sprite = sp.frames[0];
 	gob->addComponent(sprite);
 	PlayerController* pc = new PlayerController();
 	gob->addComponent(pc);
