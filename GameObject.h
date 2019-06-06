@@ -20,6 +20,9 @@ public:
 	bool getIsDirty() { return isDirty;  };
 	void setIsDirty(bool value);
 
+	bool getIsDisabled() { return isDisabled; };
+	void setIsDisabled(bool value) { isDisabled = value; }
+
 	void onDestory();
 
 	Transform* getTransform();
@@ -38,6 +41,7 @@ public:
 	}
 private:
 	bool isDirty = false;
+	bool isDisabled = false;
 	std::vector<Component*> components;
 	Scene* scene = nullptr;
 

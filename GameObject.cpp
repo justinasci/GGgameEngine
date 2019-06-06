@@ -14,6 +14,7 @@ GameObject::GameObject(Scene* scene)
 }
 
 void GameObject::update(float delta) {
+	if (isDisabled) return;
 	setIsDirty(false);
 	for (auto it = components.begin(); it != components.end(); ++it) {
 		Component* c = *it;
