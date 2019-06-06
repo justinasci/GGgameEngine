@@ -28,6 +28,7 @@ public:
 	Transform* getTransform();
 
 	void addComponent(Component* component);
+
 	template<class T>
 	T* getComponent() {
 		T* d = nullptr;
@@ -39,6 +40,20 @@ public:
 		}
 		return nullptr;
 	}
+
+	template<class T>
+	std::vector<T*> getComponents() {
+		std::vector<T*> resultComp;
+		T* d = nullptr;
+		for (Component* c : components) {
+			d = dynamic_cast<T*>(c);
+			if (d != nullptr) {
+				resultComp.push_back(d);
+			}
+		}
+		return resultComp;
+	}
+
 private:
 	bool isDirty = false;
 	bool isDisabled = false;

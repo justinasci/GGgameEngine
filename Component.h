@@ -18,8 +18,12 @@ public:
 	}
 	template <class T>
 	T* getComponent() {
-		T* ptr = owner->getComponent<T>();
-		return ptr;
+		return owner->getComponent<T>();
+	}
+
+	template <class T>
+	std::vector<T*> getComponents() {
+		return owner->getComponents<T>();
 	}
 
 	void destoryOwner() {
