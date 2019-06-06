@@ -15,9 +15,9 @@ public:
 
 	}
 	void update(float delta) {
-		int lengthGameObjects = gameObjects.size();
+		size_t lengthGameObjects = gameObjects.size();
 		dirtyObjects.clear();
-		for (int i = 0; i < lengthGameObjects; i++) {
+		for (size_t i = 0; i < lengthGameObjects; i++) {
 			gameObjects[i]->update(delta);
 			bool dirty = gameObjects[i]->getIsDirty();
 			if (dirty) {
