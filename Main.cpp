@@ -69,7 +69,9 @@ int main()
 				window.close();
 		}
 		sf::Time dt = deltaClock.restart();
+#ifdef _DEBUG
 		std::cout << 1.f / ((float)dt.asMicroseconds() / 1000000.f) << " fps \n";
+#endif
 		scene.update((float)dt.asMicroseconds()/1000000.f);
 		window.clear();
 		window.draw(scene);
