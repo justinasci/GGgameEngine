@@ -19,12 +19,14 @@ public:
 	void removeGameObject(GameObject* go);
 	void addSystem(System* sys);
 	void removeSystem(System* sys);
+	void removeComponent(Component* c);
 
 private:
-	std::vector<GameObject*> gameObjects;
-	std::stack<GameObject*> toBeAdded;
-	std::stack<GameObject*> toBeRemoved;
+	std::vector<GameObject*> gameObjectsGO;
+	std::stack<GameObject*> toBeAddedGO;
+	std::stack<GameObject*> toBeRemovedGO;
 	std::vector<GameObject*> dirtyObjects;
+	std::stack<Component*> toBeRemovedComponents;
 	std::vector<System*> systems;
 	bool running = false;
 

@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Scene.h"
 #include "Comps.h"
+#include <algorithm>
 GameObject::GameObject()
 {
 	Transform* t = new Transform();
@@ -26,6 +27,12 @@ void GameObject::addComponent(Component* component) {
 	components.push_back(component);
 	component->onInit();
 	setIsDirty(true);
+}
+
+void GameObject::removeComponent(Component* component)
+{
+	scene->removeComponent(component);
+	components.erase(std::remove(components.begin(), components.end(), component), components.end());
 }
 
 void GameObject::setScene(Scene* scene)

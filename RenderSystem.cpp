@@ -1,5 +1,5 @@
 #include "RenderSystem.h"
-
+#include <algorithm>
 RenderSystem::RenderSystem()
 {
 
@@ -18,9 +18,17 @@ void RenderSystem::addGameObject(GameObject* go)
 	}
 }
 
-void RenderSystem::removeGameObject(GameObject*)
+void RenderSystem::removeGameObject(GameObject* go)
 {
+	auto list = go->getComponents<RenderComponent>();
+	for (auto rc : list) {
+		removeComponent(rc);
+	}
+}
 
+void RenderSystem::removeComponent(Component* c)
+{
+	renderComponents.erase(std::remove(renderComponents.begin(), renderComponents.end(), c), renderComponents.end());
 }
 
 void RenderSystem::update()

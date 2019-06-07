@@ -53,6 +53,14 @@ public:
 		return resultComp;
 	}
 
+	template<class T>
+	void removeComponent() {
+		Component* c = getComponent<T>();
+		removeComponent(c);
+	}
+
+	void removeComponent(Component* component);
+
 private:
 	bool isDirty = false;
 	bool isDisabled = false;

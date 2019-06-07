@@ -11,6 +11,7 @@ public:
 	// Inherited via System
 	virtual void addGameObject(GameObject* go) override;
 	virtual void removeGameObject(GameObject*) override;
+	virtual void removeComponent(Component* c) override;
 	virtual void update() override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		for (auto c : renderComponents) {

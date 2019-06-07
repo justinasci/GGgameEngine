@@ -30,6 +30,10 @@ public:
 		removeGameObject(owner);
 	}
 
+	void destory() {
+		owner->removeComponent(this);
+	}
+
 	void removeGameObject(GameObject* ob) {
 		owner->removeGameObject(ob);
 	}

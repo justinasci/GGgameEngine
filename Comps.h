@@ -47,8 +47,8 @@ class RemovAfterTime : public Component {
 	virtual void update(float delta) override {
 		timer += delta;
 
-		if (timer > 5.0f) {
-			this->destoryOwner();
+		if (timer > 1.0f) {
+			this->destory();
 		}
 	};
 	virtual void onInit() override {};
@@ -110,10 +110,12 @@ private:
 	GameObject* makeBullet(Sprite* s, Transform t) {
 		GameObject* bullet = new GameObject();
 		Transform* tr = bullet->getTransform();
+		RemovAfterTime* rm = new RemovAfterTime();
 		Sprite* sp = new Sprite();
 		*sp = *s;
 		*tr = t;
 		bullet->addComponent(sp);
+		bullet->addComponent(rm);
 		bullet->addComponent(new Spinner());
 		return bullet;
 	}

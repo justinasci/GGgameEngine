@@ -2,27 +2,28 @@
 #include "GameObject.h"
 #include "Renderable.h"
 #include "System.h"
+#include <algorithm>
 #include <iostream>
 
 void Scene::update(float delta) {
-	size_t lengthGameObjects = gameObjects.size();
+	size_t lengthGameObjects = gameObjectsGO.size();
 
 	for (size_t i = 0; i < lengthGameObjects; i++) {
-		gameObjects[i]->update(delta);
-		bool dirty = gameObjects[i]->getIsDirty();
+		gameObjectsGO[i]->update(delta);
+		bool dirty = gameObjectsGO[i]->getIsDirty();
 		if (dirty) {
-			dirtyObjects.push_back(gameObjects[i]);
+			dirtyObjects.push_back(gameObjectsGO[i]);
 		}
 	}
 
 #ifdef _DEBUG
-	if (toBeAdded.size() > 0) std::cout << "Total gameObjects in scene: " << toBeAdded.size() << "\n";
+	if (toBeAddedGO.size() > 0) std::cout << "Total gameObjects in scene: " << toBeAddedGO.size() << "\n";
 #endif
 
-	while (!toBeAdded.empty()) {
-		gameObjects.push_back(toBeAdded.top());
-		dirtyObjects.push_back(toBeAdded.top());
-		toBeAdded.pop();
+	while (!toBeAddedGO.empty()) {
+		gameObjectsGO.push_back(toBeAddedGO.top());
+		dirtyObjects.push_back(toBeAddedGO.top());
+		toBeAddedGO.pop();
 	}
 
 	if (dirtyObjects.size() > 0) {
@@ -34,17 +35,39 @@ void Scene::update(float delta) {
 		}
 	}
 
+	while (!toBeRemovedGO.empty()) {
+		GameObject* tbr = toBeRemovedGO.top();
+		for (auto system : systems) {
+			system->removeGameObject(tbr);
+		}
+		tbr->onDestory();
+		gameObjectsGO.erase(std::remove(gameObjectsGO.begin(), gameObjectsGO.end(), tbr), gameObjectsGO.end());
+		toBeRemovedGO.pop();
+		delete tbr;
+	}
+
+	while (!toBeRemovedComponents.empty())
+	{
+		Component* c = toBeRemovedComponents.top();
+		toBeRemovedComponents.pop();
+		for (auto system : systems) {
+			system->removeComponent(c);
+		}
+		c->onDestroy();
+		delete c;
+	}
+
 	dirtyObjects.clear();
 }
 
 void Scene::addGameObject(GameObject* go) {
 	go->setScene(this);
-	toBeAdded.push(go);
+	toBeAddedGO.push(go);
 }
 
 void Scene::removeGameObject(GameObject* go) {
 	go->setIsDisabled(true);
-	toBeRemoved.push(go);
+	toBeRemovedGO.push(go);
 }
 
 void Scene::addSystem(System* system)
@@ -55,4 +78,9 @@ void Scene::addSystem(System* system)
 void Scene::removeSystem(System* system)
 {
 	
+}
+
+void Scene::removeComponent(Component* c)
+{
+	toBeRemovedComponents.push(c);
 }
