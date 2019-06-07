@@ -146,7 +146,6 @@
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="System.h" />
-    <ClInclude Include="TEMP.h" />
     <ClInclude Include="Transfrom.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
