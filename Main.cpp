@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "Scene.h"
 #include "Comps.h"
+#include "Resources.h"
 
 struct SpriteSheet {
 	sf::Texture* texture;
@@ -48,10 +49,13 @@ void buildScene(Scene& scene, SpriteSheet sp) {
 
 int main()
 {
+	RTX::load("banditas", "resources//banditas.png");
+	RTX::load("grass", "resources//grass_tileset_16x16.png");
+
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 
-	auto sp = loadSpriteSheet(loadTexture("resources//banditas.png"), 8, 7, 0, 6);
-	auto grass = loadSpriteSheet(loadTexture("resources//grass_tileset_16x16.png"), 16, 16);
+	auto sp = loadSpriteSheet(RTX::get("banditas"), 8, 7, 0, 6);
+	auto grass = loadSpriteSheet(RTX::get("grass"), 16, 16);
 
 	int i = 0;
 
