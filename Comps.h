@@ -87,7 +87,7 @@ public:
 	}
 
 	void onInit() {
-		t = getTransfrom();
+		t = getTransformable();
 	}
 
 	void onDestroy() {};
@@ -155,10 +155,10 @@ public:
 				isLookingLeft = false;
 				t->scale(sf::Vector2f(-1, 1));
 			}
-			if (!isLookingLeft) {
-				dpos.x *= -1;
-			}
-			t->translate(dpos * delta);
+			//if (!isLookingLeft) {
+			//	dpos.x *= -1;
+			//}
+			t->move(dpos * delta);
 		}
 		else {
 			sp->setFrameId("idle");
@@ -168,8 +168,8 @@ public:
 
 	void onInit()
 	{
-		t = getTransfrom();
-		t->translate(200, 200);
+		t = getTransformable();
+		t->move(200, 200);
 		sp = getComponent<AnimatedSprite>();
 	}
 

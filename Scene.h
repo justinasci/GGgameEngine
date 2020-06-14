@@ -21,6 +21,20 @@ public:
 	void removeSystem(System* sys);
 	void removeComponent(Component* c);
 
+	template <class T>
+	std::vector<T*> getGameObjectsByType() {
+		std::vector<T*> resultComp;
+		T* d = nullptr;
+		for (GameObject* c : gameObjectsGO) {
+			d = dynamic_cast<T*>(c);
+			if (d != nullptr) {
+				resultComp.push_back(d);
+			}
+		}
+		return resultComp;
+	}
+
+
 private:
 	std::vector<GameObject*> gameObjectsGO;
 	std::stack<GameObject*> toBeAddedGO;

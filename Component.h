@@ -42,7 +42,7 @@ public:
 		owner->addGameObject(ob);
 	}
 
-	Transform* getTransfrom() {
+	Transform* getTransformable() {
 		return owner->getTransform();
 	};
 

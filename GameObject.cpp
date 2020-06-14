@@ -12,6 +12,14 @@ GameObject::GameObject()
 GameObject::GameObject(Scene* scene)
 {
 	setScene(scene);
+	GameObject();
+}
+
+GameObject::GameObject(Scene* scene, std::string name)
+{
+	setName(name);
+	setScene(scene);
+	GameObject();
 }
 
 void GameObject::update(float delta) {

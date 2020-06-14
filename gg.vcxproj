@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -135,8 +135,10 @@
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="System.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraFollow.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Comps.h" />
     <ClInclude Include="GameObject.h" />
@@ -147,6 +149,8 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Transfrom.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

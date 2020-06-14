@@ -7,35 +7,20 @@
 #include "Scene.h"
 #include "Comps.h"
 #include "Resources.h"
+#include "World.h"
+#include "CameraFollow.h"
+#include "Utils.h"
 
-sf::Texture* loadTexture(const std::string fileName) {
-	sf::Texture* texture = new sf::Texture;
-	if (!texture->loadFromFile(fileName)) {
-		throw "NEVEIKIA";
-	}
-	return texture;
+void buildWorld(Scene& scene) {
+	GameObject* gob = new GameObject();
+	World* worldComponent = new World();
+	gob->addComponent(worldComponent);
+	scene.addGameObject(gob);
 }
 
-std::vector<std::vector<sf::Sprite>> loadSpriteSheet(sf::Texture* texture, int widthTiles, int heightTiles, int fromRow = 0, int toRow = -1, int fromCol = 0, int toCol = -1) {
-	std::vector<std::vector<sf::Sprite> > bundle;
-	sf::Vector2u imgSize = texture->getSize();
-	sf::Vector2u tileSize = sf::Vector2u(imgSize.x / widthTiles, imgSize.y / heightTiles);
-	int endRow = toRow == -1 ? widthTiles : toRow;
-	int endCol = toCol == -1 ? heightTiles : toCol;
 
-	for (int h = fromRow; h <= endRow; h++) {
-		std::vector<sf::Sprite> frames;
-		for (int w = fromCol; w <= endCol; w++) {
-			sf::Sprite s = sf::Sprite(*texture, sf::IntRect(w * tileSize.x, h * tileSize.y, tileSize.x, tileSize.y));
-			s.move(-(float)tileSize.x / 2.0f, -(float)tileSize.y / 2.0f);
-			frames.push_back(s);
-		}
-		bundle.push_back(frames);
-	}
-	return bundle;
-}
+void buildScene(Scene& scene, sf::RenderWindow& window) {
 
-void buildScene(Scene& scene) {
 	GameObject* gob = new GameObject();
 	AnimatedSprite* sprite = new AnimatedSprite();
 	sprite->setBundle(*RSB::get("banditas"));
@@ -43,6 +28,10 @@ void buildScene(Scene& scene) {
 	gob->addComponent(sprite);
 	PlayerController* pc = new PlayerController();
 	gob->addComponent(pc);
+	sf::View view = sf::View(sf::Vector2f(0, 0), sf::Vector2f(window.getSize().x, window.getSize().y));
+	window.setView(view);
+	CameraFollow* cam = new CameraFollow(&window);
+	gob->addComponent(cam);
 	scene.addGameObject(gob);
 }
 
@@ -57,6 +46,7 @@ int main()
 {
 	RTX::load("banditas", "resources//banditas.png");
 	RTX::load("grass", "resources//grass_tileset_16x16.png");
+	RTX::load("test", "resources//test.png");
 	 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 
@@ -73,7 +63,8 @@ int main()
 	int i = 0;
 
 	Scene scene;
-	buildScene(scene);
+	buildScene(scene, window);
+	buildWorld(scene);
 	sf::Clock deltaClock;
 
 	while (window.isOpen())

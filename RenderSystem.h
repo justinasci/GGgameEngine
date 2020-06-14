@@ -15,7 +15,7 @@ public:
 	virtual void update() override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		for (auto c : renderComponents) {
-			c->draw(target, states, *c->getTransfrom());
+			c->draw(target, states, c->getTransformable()->getTransform());
 		}
 	}
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-class Transform : public Component, public sf::Transform
+class Transform : public Component, public sf::Transformable
 {
 public:
 

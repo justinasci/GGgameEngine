@@ -9,6 +9,8 @@ class GameObject
 public:
 	GameObject();
 	GameObject(Scene* scene);
+	GameObject(Scene* scene, std::string name);
+
 	void update(float delta);
 
 	void setScene(Scene* scene);
@@ -21,6 +23,9 @@ public:
 
 	bool getIsDisabled() { return isDisabled; };
 	void setIsDisabled(bool value) { isDisabled = value; }
+
+	std::string getName() { return name; };
+	void setName(std::string name) { this->name = name; };
 
 	void onDestory();
 
@@ -64,6 +69,7 @@ public:
 private:
 	bool isDirty = false;
 	bool isDisabled = false;
+	std::string name = "";
 	std::vector<Component*> components;
 	Scene* scene = nullptr;
 
