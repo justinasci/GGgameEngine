@@ -7,7 +7,10 @@ constexpr auto TEX_TILES = 8;
 
 enum TileType: std::uint8_t {
 	grass = 0,
-	stone = 15,
+	stone = 1,
+	sand = 2,
+	water = 3,
+	lastTile = 4
 };
 
 struct Tile

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "PerlinNoise.hpp"
 
 sf::Vector2i getNearestChunkRoot(sf::Vector2i point, int chunkSideLenght) {
 	return sf::Vector2i(point.x - point.x % chunkSideLenght, point.y - point.y % chunkSideLenght);
@@ -64,8 +65,20 @@ Chunk* World::getChunk(sf::Vector2i position)
 Chunk* World::generateChunk(sf::Vector2i position = sf::Vector2i(0, 0))
 {
 	Chunk* chunk = new Chunk();
+	float f = 8.0f;
+	float px = (float)position.x / (float)(CHUNK_SIDE * CHUNK_SIDE);
+	float py = (float)position.y / (float)(CHUNK_SIDE * CHUNK_SIDE);
+	const siv::PerlinNoise perlin(88888);
 	for (auto i = 0; i < CHUNK_SIDE * CHUNK_SIDE; i++) {
-		chunk->tiles[i].type = grass;
+
+		double xzz = (double)((double)(i % CHUNK_SIDE) / CHUNK_SIDE + px) / f;
+		double x = (double)((double)(i % CHUNK_SIDE) / CHUNK_SIDE + px) / f;
+		double y = (double)((double)((double)(i / CHUNK_SIDE) / CHUNK_SIDE) + py ) / f;
+		auto p = perlin.accumulatedOctaveNoise2D_0_1(x, y , 8);
+		auto type = static_cast<TileType>(
+			static_cast<int>(roundf((p * TileType::lastTile - 0.5f)))
+			);
+		chunk->tiles[i].type = type;
 	}
 	chunk->root = position;
 	return chunk;
