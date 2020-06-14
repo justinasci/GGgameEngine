@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Events.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="CameraFollow.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Comps.h" />
+    <ClInclude Include="Events.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Renderable.h" />

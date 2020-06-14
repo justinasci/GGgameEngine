@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 static sf::Texture* loadTexture(const std::string fileName) {
 	sf::Texture* texture = new sf::Texture;
 	if (!texture->loadFromFile(fileName)) {
@@ -28,4 +29,10 @@ static std::vector<std::vector<sf::Sprite>> loadSpriteSheet(sf::Texture* texture
 		bundle.push_back(frames);
 	}
 	return bundle;
+}
+
+static std::vector<sf::Sprite> subvector(std::vector<sf::Sprite> vec, int s, int e) {
+	std::vector<sf::Sprite>::const_iterator first = vec.begin() + s;
+	std::vector<sf::Sprite>::const_iterator last = vec.begin() + e;
+	return std::vector<sf::Sprite>(first, last);
 }

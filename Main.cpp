@@ -10,10 +10,11 @@
 #include "World.h"
 #include "CameraFollow.h"
 #include "Utils.h"
+#include "Events.h"
 
-void buildWorld(Scene& scene) {
+void buildWorld(Scene& scene, sf::RenderWindow& window) {
 	GameObject* gob = new GameObject();
-	World* worldComponent = new World();
+	World* worldComponent = new World(&window);
 	gob->addComponent(worldComponent);
 	scene.addGameObject(gob);
 }
@@ -35,13 +36,6 @@ void buildScene(Scene& scene, sf::RenderWindow& window) {
 	scene.addGameObject(gob);
 }
 
-
-std::vector<sf::Sprite> subvector(std::vector<sf::Sprite> vec, int s, int e) {
-	std::vector<sf::Sprite>::const_iterator first = vec.begin() + s;
-	std::vector<sf::Sprite>::const_iterator last = vec.begin() + e;
-	return std::vector<sf::Sprite>(first, last);
-}
-
 int main()
 {
 	RTX::load("banditas", "resources//banditas.png");
@@ -49,6 +43,7 @@ int main()
 	RTX::load("test", "resources//test.png");
 	 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+	window.setFramerateLimit(144);
 
 	auto sp = loadSpriteSheet(RTX::get("banditas"), 8, 7, 0, 5);
 	SpriteBundle sb;
@@ -57,14 +52,9 @@ int main()
 	sb["attack"] = sp[2];
 	sb["die"] = sp[3];
 	RSB::add("banditas", &sb);
-
-	auto grass = loadSpriteSheet(RTX::get("grass"), 16, 16);
-
-	int i = 0;
-
 	Scene scene;
 	buildScene(scene, window);
-	buildWorld(scene);
+	buildWorld(scene, window);
 	sf::Clock deltaClock;
 
 	while (window.isOpen())
@@ -74,15 +64,20 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if (event.type == sf::Event::MouseWheelScrolled) {
+				Events::setMouseWheelEvent(event.mouseWheelScroll);
+			}
 		}
 		sf::Time dt = deltaClock.restart();
 #ifdef _DEBUG
 		std::cout << 1.f / ((float)dt.asMicroseconds() / 1000000.f) << " fps \n";
 #endif
+		std::cout << 1.f / ((float)dt.asMicroseconds() / 1000000.f) << " fps \n";
 		scene.update((float)dt.asMicroseconds() / 1000000.f);
 		window.clear();
 		window.draw(scene);
 		window.display();
+		Events::setMouseWheelEvent({});
 
 	}
 	return 0;

@@ -28,8 +28,9 @@ class World :
 	public RenderComponent
 {
 public:
-	World(){
+	World(sf::RenderWindow* window){
 		this->texture = RTX::get("test");
+		this->window = window;
 	}
 
 	virtual void update(float delta) override;
@@ -64,5 +65,6 @@ public:
 	std::map<std::pair<int,int>, Chunk*> chunks;
 	std::map<std::pair<int, int>, ChunkRenderData* > renderData;
 	sf::Texture* texture;
+	sf::RenderWindow* window;
 };
 

@@ -155,9 +155,6 @@ public:
 				isLookingLeft = false;
 				t->scale(sf::Vector2f(-1, 1));
 			}
-			//if (!isLookingLeft) {
-			//	dpos.x *= -1;
-			//}
 			t->move(dpos * delta);
 		}
 		else {
